@@ -27,9 +27,10 @@ cleanging_text <- news_text %>%
   str_remove_all("flash 오류를 우회하기 위한 함수 추가") %>% 
   str_remove_all("function _flash_removeCallback") %>% 
   str_remove_all("[a-zA-Z]") %>% 
-  str_replace_all("\\W"," ") 
+  str_replace_all("\\W"," ")
+  
 
-cleanging_text <- paste0(cleanging_text, collapse = "")
+# cleanging_text <- paste0(cleanging_text, collapse = "")
 
 nouns <- KoNLP::extractNoun(cleanging_text)
 
