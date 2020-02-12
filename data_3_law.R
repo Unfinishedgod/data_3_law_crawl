@@ -14,13 +14,14 @@ news_urls <- news_html %>%
   html_nodes("._sp_each_url") %>% 
   html_attr("href")
 
+news_urls <- news_urls[news_urls %>% str_detect("news.naver")]
 
-news_text <- map_chr(news_urls[1:4], function(news_page){
+news_text <- map_chr(news_urls, function(news_page){
   news_page %>% 
     read_html() %>% 
     html_nodes("#articleBodyContents._article_body_contents") %>% 
     html_text()
-}) 
+})
 
 cleanging_text <- news_text %>% 
   str_remove_all("flash 오류를 우회하기 위한 함수 추가") %>% 
