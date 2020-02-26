@@ -4,6 +4,7 @@ library(KoNLP)
 library(rvest)
 library(tidyverse)
 
+
 news_url <-"https://search.naver.com/search.naver?&where=news&query=%EB%8D%B0%EC%9D%B4%ED%84%B0%203%EB%B2%95&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so:r,p:all,a:all&mynews=0&cluster_rank=65&start=1&refresh_start=0"
 
 
