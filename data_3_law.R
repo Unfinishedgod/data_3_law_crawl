@@ -3,10 +3,13 @@ library(wordcloud2)
 library(KoNLP)
 library(rvest)
 library(tidyverse)
+library(glue)
 
+keyword <- "공팔리터"
 
-news_url <-"https://search.naver.com/search.naver?&where=news&query=%EB%8D%B0%EC%9D%B4%ED%84%B0%203%EB%B2%95&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so:r,p:all,a:all&mynews=0&cluster_rank=65&start=1&refresh_start=0"
+# news_url <-"https://search.naver.com/search.naver?&where=news&query=%EB%8D%B0%EC%9D%B4%ED%84%B0%203%EB%B2%95&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so:r,p:all,a:all&mynews=0&cluster_rank=65&start=1&refresh_start=0"
 
+news_url <- glue("https://search.naver.com/search.naver?&where=news&query={keyword}&sm=tab_pge&sort=0&photo=0&field=0&reporter_article=&pd=0&ds=&de=&docid=&nso=so:r,p:all,a:all&mynews=0&cluster_rank=22&start=11&refresh_start=0")
 
 news_html <- read_html(news_url) 
 
@@ -28,7 +31,8 @@ cleanging_text <- news_text %>%
   str_remove_all("flash 오류를 우회하기 위한 함수 추가") %>% 
   str_remove_all("function _flash_removeCallback") %>% 
   str_remove_all("[a-zA-Z]") %>% 
-  str_replace_all("\\W"," ")
+  str_replace_all("\\W"," ") %>% 
+  str_replace_all("  ","")
   
 
 # cleanging_text <- paste0(cleanging_text, collapse = "")
@@ -60,6 +64,7 @@ ggplot(head(word.freq,30), aes(x=reorder(word,freq),y=freq,fill=word),colour=gra
   labs(x="",y="단어 빈도",title = "데이터 3법 네이버 뉴스 단어 빈도") + 
   coord_flip() + 
   theme(legend.position = "none") +
+  geom_text(aes(label=freq), vjust=0.5, hjust = 3,color="black", size=4) +
   theme(text = element_text(size=20),
         axis.text.x = element_text(angle=90, hjust=1)) 
 
